@@ -18,6 +18,11 @@ function Home(){
         email: "",
         github: ""
     });
+
+    //Handler onChange
+    function handleChange(event){
+        console.log('olix');
+    }
     
 
     return(
@@ -33,13 +38,14 @@ function Home(){
                                 return (
                                     <div className="personal-card border border-secondary rounded ">
                                         <div>
-                                            <img src="https://avatars.githubusercontent.com/u/91167188?v=4" alt="Github Avatar"/>
+                                            <img src={`https://unavatar.io/github/${item.github}`} 
+                                                alt={`Github de ${item.fullname}`}/>
                                         </div>
                                         <div>
-                                            <p>Fullname</p>
-                                            <p>Email</p>
-                                            <p>Github</p>
-                                            <p>Description</p>
+                                            <p>{item.fullname}</p>
+                                            <p>{item.email}</p>
+                                            <p>{item.github}</p>
+                                            <p>{item.description}</p>
                                         </div>
                                     </div>
                                 )
@@ -52,22 +58,42 @@ function Home(){
 
                             <div className="form-group">
                                 <label className="form-label" htmlFor="fullname">Fullname:</label>
-                                <input className="form-control" id="fullname" type="text"></input>
+                                <input className="form-control" 
+                                    id="fullname" 
+                                    type="text"
+                                    name="name"
+                                    onChange={handleChange} 
+                                />
                             </div>
                             
                             <div>
                                 <label className="form-label" htmlFor="description">Description:</label>
-                                <input className="form-control" id="description" type="textArea"></input>
+                                <input className="form-control" 
+                                    id="description" 
+                                    type="textArea"
+                                    name="description"
+                                    onChange={handleChange} 
+                                />
                             </div>
 
                             <div>
                                 <label className="form-label" htmlFor="email">Email:</label>
-                                <input className="form-control" id="email" type="email"></input>
+                                <input className="form-control" 
+                                    id="email" 
+                                    type="email"
+                                    name="email"
+                                    onChange={handleChange} 
+                                />
                             </div>
 
                             <div>
                                 <label className="form-label" htmlFor="github">Github:</label>
-                                <input className="form-control" id="github" type="text"></input>
+                                <input className="form-control" 
+                                    id="github" 
+                                    type="text"
+                                    name="github"
+                                    onChange={handleChange}     
+                                />
                             </div>    
 
                             <div className="text-center pt-3">
