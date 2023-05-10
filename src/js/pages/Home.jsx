@@ -1,5 +1,9 @@
 import React, {useState} from "react";
 import confetti from "canvas-confetti";
+import Card from "../component/Card.jsx";
+import Error from "../component/Error.jsx";
+import Form from "../component/Form.jsx";
+import Navbar from "../component/Navbar.jsx";
 
 const initialStateUser = { //Un dato de uso frecuente en el componente
     fullname: "",
@@ -10,14 +14,7 @@ const initialStateUser = { //Un dato de uso frecuente en el componente
 
 function Home(){
     //Lista de usuarios
-    const [allUsers, setAllUsers] = useState([
-        {
-            fullname: "Kelvin Ruiz",
-            description: "Comenzado en la programacion",
-            email: "kelvinruizdev@gmail.com",
-            github: "kelvinruizdev"
-        }
-    ])
+    const [allUsers, setAllUsers] = useState([])
     
     //Usuario actual
     const [user, setUser] = useState(initialStateUser)
@@ -26,7 +23,7 @@ function Home(){
     const [error, setError] = useState(false)
 
     //destructuracion
-    const {fullname, description, email, github} = user
+    const {fullname, description, email, github} = user;
 
     //Handler onChange
     function handleChange ({target}){
@@ -56,7 +53,6 @@ function Home(){
         }
 
     }
-    
 
     return(
         <>    
@@ -64,35 +60,10 @@ function Home(){
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-6">
 
-                        {/*Mapear los usuarios*/}
-                        {
-                            allUsers.map((item, index) => {
-                                return (
-                                    <div key={index} className="personal-card border border-secondary rounded ">
-                                        <div>
-                                            <img src={`https://unavatar.io/github/${item.github}`} 
-                                                alt={`Github de ${item.fullname}`}/>
-                                        </div>
-                                        <div>
-                                            <p>{item.fullname}</p>
-                                            <p>{item.email}</p>
-                                            <p>{item.github}</p>
-                                            <p>{item.description}</p>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+                        {/*Navbar*/}
+                        <Navbar />
 
-                        {/* Mensaje de error*/}
-                        {
-                            error ?
-                                <div className="alert alert-danger" role="alert">
-                                    All fields must be filled!
-                                </div> :
-                                null
-                        }
-
+                        {/*Formulario*/}
                         <form onSubmit={handleSubmit} className="border border-secondary rounded p-3 mt-3" >
 
                             <h2 className="text-center">Fill in to create profile card</h2>
@@ -145,7 +116,29 @@ function Home(){
                                 <button className="btn btn-primary w-50" type="submit">Create</button>
                             </div>
 
-                        </form>  
+                        </form>
+
+                        {/*<Form 
+                            handleChange={handleChange} 
+                            handleSubmit={handleSubmit} 
+                            user={user}
+                        /> */} 
+
+                        {/*Mensaje de error*/}
+                        {
+                            error && <Error message={"All fields must be filled!"} />
+                        }
+
+                        {/*Mapear los usuarios*/}
+                        {
+                            allUsers.map((item, index) => {
+                                return (
+                                    <Card key={index} item={item}/>
+                                )
+                            })
+                        }
+
+                        
 
                     </div>
                 </div>
