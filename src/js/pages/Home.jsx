@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import confetti from "canvas-confetti";
+
 import Card from "../component/Card.jsx";
 import Error from "../component/Error.jsx";
 import Form from "../component/Form.jsx";
@@ -14,7 +15,14 @@ const initialStateUser = { //Un dato de uso frecuente en el componente
 
 function Home(){
     //Lista de usuarios
-    const [allUsers, setAllUsers] = useState([])
+    const [allUsers, setAllUsers] = useState([
+        {
+            fullname: "Kelvin Ruiz",
+            description: "Comenzando en el desarrollo web",
+            email: "k3azzz@gmail.com",
+            github: "kelvinruizdev"
+        }
+    ])
     
     //Usuario actual
     const [user, setUser] = useState(initialStateUser)
