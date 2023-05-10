@@ -9,7 +9,7 @@ function Home(){
             email: "kelvinruizdev@gmail.com",
             github: "kelvinruizdev"
         }
-    ]);
+    ])
     
     //Usuario actual
     const [user, setUser] = useState({
@@ -17,11 +17,18 @@ function Home(){
         description: "",
         email: "",
         github: ""
-    });
+    })
 
     //Handler onChange
-    function handleChange(event){
+    const handleChange = ({target}) => {
         console.log('olix');
+
+        setUser({
+            ...user, 
+            [target.name]: target.value
+        });
+        console.log(user);
+
     }
     
 
@@ -34,9 +41,9 @@ function Home(){
 
                         {/*Mapear los usuarios*/}
                         {
-                            allUsers.map((item, index)=>{
+                            allUsers.map((item, index) => {
                                 return (
-                                    <div className="personal-card border border-secondary rounded ">
+                                    <div key={index} className="personal-card border border-secondary rounded ">
                                         <div>
                                             <img src={`https://unavatar.io/github/${item.github}`} 
                                                 alt={`Github de ${item.fullname}`}/>
@@ -52,6 +59,8 @@ function Home(){
                             })
                         }
 
+                        
+
                         <form className="border border-secondary rounded p-3 mt-3">
 
                             <h2 className="text-center">Fill in to create profile card</h2>
@@ -61,8 +70,9 @@ function Home(){
                                 <input className="form-control" 
                                     id="fullname" 
                                     type="text"
-                                    name="name"
+                                    name="fullname"
                                     onChange={handleChange} 
+                                    value={user.fullname}
                                 />
                             </div>
                             
@@ -72,7 +82,8 @@ function Home(){
                                     id="description" 
                                     type="textArea"
                                     name="description"
-                                    onChange={handleChange} 
+                                    onChange={handleChange}
+                                    value={user.description} 
                                 />
                             </div>
 
@@ -82,7 +93,8 @@ function Home(){
                                     id="email" 
                                     type="email"
                                     name="email"
-                                    onChange={handleChange} 
+                                    onChange={handleChange}
+                                    value={user.email} 
                                 />
                             </div>
 
@@ -92,7 +104,8 @@ function Home(){
                                     id="github" 
                                     type="text"
                                     name="github"
-                                    onChange={handleChange}     
+                                    onChange={handleChange} 
+                                    value={user.github}    
                                 />
                             </div>    
 
