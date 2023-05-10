@@ -1,4 +1,12 @@
 import React, {useState} from "react";
+import confetti from "canvas-confetti";
+
+const initialStateUser = { //Un dato de uso frecuente en el componente
+    fullname: "",
+    description: "",
+    email: "",
+    github: ""
+}
 
 function Home(){
     //Lista de usuarios
@@ -12,29 +20,46 @@ function Home(){
     ])
     
     //Usuario actual
-    const [user, setUser] = useState({
-        fullname: "",
-        description: "",
-        email: "",
-        github: ""
-    })
+    const [user, setUser] = useState(initialStateUser)
+
+    //Estado para manejar errores en el formulario
+    const [error, setError] = useState(false)
+
+    //destructuracion
+    const {fullname, description, email, github} = user
 
     //Handler onChange
-    const handleChange = ({target}) => {
-        console.log('olix');
-
+    function handleChange ({target}){
         setUser({
             ...user, 
             [target.name]: target.value
         });
-        console.log(user);
+    }
+
+    //Handler Submit
+    function handleSubmit(event){
+        
+        event.preventDefault(); //Evita el burbujeo, no refresca al darle submit
+        //verificar que tiene algo
+        if(fullname.trim() != "" && email.trim() != "" && description.trim() != "" && github.trim() != ""){
+            //tiene algo
+            setAllUsers([...allUsers, user])
+            setUser(initialStateUser)
+            setError(false)
+            confetti()
+        }else{
+            //no tiene nada -> error
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+            }, 5000);
+        }
 
     }
     
 
     return(
-        <>
-            
+        <>    
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-6">
@@ -59,9 +84,16 @@ function Home(){
                             })
                         }
 
-                        
+                        {/* Mensaje de error*/}
+                        {
+                            error ?
+                                <div className="alert alert-danger" role="alert">
+                                    All fields must be filled!
+                                </div> :
+                                null
+                        }
 
-                        <form className="border border-secondary rounded p-3 mt-3">
+                        <form onSubmit={handleSubmit} className="border border-secondary rounded p-3 mt-3" >
 
                             <h2 className="text-center">Fill in to create profile card</h2>
 
@@ -72,7 +104,7 @@ function Home(){
                                     type="text"
                                     name="fullname"
                                     onChange={handleChange} 
-                                    value={user.fullname}
+                                    value={fullname}
                                 />
                             </div>
                             
@@ -83,7 +115,7 @@ function Home(){
                                     type="textArea"
                                     name="description"
                                     onChange={handleChange}
-                                    value={user.description} 
+                                    value={description} 
                                 />
                             </div>
 
@@ -94,7 +126,7 @@ function Home(){
                                     type="email"
                                     name="email"
                                     onChange={handleChange}
-                                    value={user.email} 
+                                    value={email} 
                                 />
                             </div>
 
@@ -105,7 +137,7 @@ function Home(){
                                     type="text"
                                     name="github"
                                     onChange={handleChange} 
-                                    value={user.github}    
+                                    value={github}    
                                 />
                             </div>    
 
